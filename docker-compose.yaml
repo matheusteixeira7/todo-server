@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    command: wait-for db:5432 -t 40 -- ./start.sh
+    ports:
+      - 8000:3333
+    volumes:
+      - .:/usr/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: pets_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./pgdata/db:/var/lib/postgresql/data
