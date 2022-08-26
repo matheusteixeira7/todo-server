@@ -1,25 +1,25 @@
 import { InMemoryProjectRepository } from '@tests/repositories'
 import { CreateProjectUseCase } from './create-project.usecase'
+import { ListProjectUseCase } from './list-project.usecase'
 
 let projectRepository: InMemoryProjectRepository
-let sut: CreateProjectUseCase
+let createProjectUseCase: CreateProjectUseCase
+let sut: ListProjectUseCase
 
-describe('CreateProjectUseCase', () => {
+describe('ListProjectUseCase', () => {
   beforeEach(() => {
     projectRepository = new InMemoryProjectRepository()
-    sut = new CreateProjectUseCase(projectRepository)
+    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    sut = new ListProjectUseCase(projectRepository)
   })
 
-  it('should NOT be able to create a project with the same name', async () => {
-    expect(async () => {
-      await sut.execute({ name: 'project' })
-      await sut.execute({ name: 'project' })
-    }).rejects.toThrow()
-  })
+  it('should be able to return all projects', async () => {
+    const project1 = await createProjectUseCase.execute({ name: 'project1' })
+    const project2 = await createProjectUseCase.execute({ name: 'project2' })
 
-  it('should be able to create a project', async () => {
-    const project = await sut.execute({ name: 'project' })
+    const projects = await sut.execute()
 
-    expect(project).toHaveProperty('id')
+    expect(projects).toHaveLength(2)
+    expect(projects).toEqual([project1, project2])
   })
 })
