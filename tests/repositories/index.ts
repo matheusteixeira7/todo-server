@@ -1,5 +1,3 @@
-export * from './in-memory-customers-repository'
-export * from './in-memory-pets-repository'
-export * from './in-memory-services-repository'
 export * from './in-memory-users-repository'
-export * from './in-memory-transactions-repository'
+export * from './in-memory-project.repository'
+export * from './in-memory-task.repository'

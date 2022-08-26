@@ -1,26 +1,26 @@
 import { randomUUID } from 'crypto'
+import { Task } from './task.entity'
 
-type IServiceProps = {
+type IProjectProps = {
   name: string
-  price: number
 }
 
-export class Service {
+export class Project {
   id: string
   name: string
-  price: number
+  tasks: Task[]
   createdAt?: Date
   updatedAt?: Date
 
-  private constructor (props: IServiceProps) {
+  private constructor (props: IProjectProps) {
     this.id = this.id ?? randomUUID()
     this.name = props.name
-    this.price = props.price
+    this.tasks = []
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }
 
-  static create (props: IServiceProps) {
-    return new Service(props)
+  static create (props: IProjectProps) {
+    return new Project(props)
   }
 }
