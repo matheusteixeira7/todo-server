@@ -12,7 +12,11 @@ describe('GetProjectUseCase', () => {
     sut = new GetProjectUseCase(projectRepository)
   })
 
-  it('should return a project', async () => {
+  it('should throw if project is not found', async () => {
+    await expect(sut.execute({ id: 'invalid_id' })).rejects.toThrow()
+  })
+
+  it('should be able to return a project', async () => {
     const project = await createProjectUseCase.execute({ name: 'project' })
 
     const result = await sut.execute({ id: project.id })
