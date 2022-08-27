@@ -35,14 +35,35 @@ describe('CreateTaskUseCase', () => {
     const task = {
       name: 'task',
       responsible: 'task responsible',
-      status: 'pendente',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: 'invalid_id'
     }
 
-    expect(async () => {
-      await sut.execute(task)
-    }).rejects.toThrow()
+    await expect(sut.execute(task)).rejects.toThrowError('Project not found')
+  })
+
+  it('should NOT be able to create a task with an invalid status', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'user',
+      email: 'user@email.com',
+      password: 'user_password'
+    })
+
+    const project = await createProjectUseCase.execute({
+      name: 'project',
+      userId: user.id
+    })
+
+    const task = {
+      name: 'task',
+      responsible: 'task responsible',
+      status: 'Invalid status' as 'Concluída' | 'Vencida' | 'Pendente',
+      finishDate: new Date(),
+      projectId: project.id
+    }
+
+    await expect(sut.execute(task)).rejects.toThrowError('Invalid status')
   })
 
   it('should be able to create a task', async () => {
@@ -60,7 +81,7 @@ describe('CreateTaskUseCase', () => {
     const task = {
       name: 'task',
       responsible: 'task responsible',
-      status: 'pendente',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     }
