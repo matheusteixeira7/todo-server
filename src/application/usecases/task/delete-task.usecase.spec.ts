@@ -1,20 +1,38 @@
-import { ProjectRepository } from '@application/repositories'
-import { InMemoryProjectRepository, InMemoryTaskRepository } from '@tests/repositories'
+import {
+  InMemoryProjectRepository,
+  InMemoryTaskRepository,
+  InMemoryUsersRepository
+} from '@tests/repositories'
 import { CreateProjectUseCase } from '../project'
+import { CreateUser } from '../users'
 import { CreateTaskUseCase, DeleteTaskUseCase } from './'
 
+let projectRepository: InMemoryProjectRepository
 let taskRepository: InMemoryTaskRepository
-let projectRepository: ProjectRepository
+let userRepository: InMemoryUsersRepository
+
 let createProjectUseCase: CreateProjectUseCase
 let createTaskUseCase: CreateTaskUseCase
+let createUserUseCase: CreateUser
+
 let sut: DeleteTaskUseCase
 
 describe('DeleteTaskUseCase', () => {
   beforeEach(() => {
-    taskRepository = new InMemoryTaskRepository()
     projectRepository = new InMemoryProjectRepository()
-    createProjectUseCase = new CreateProjectUseCase(projectRepository)
-    createTaskUseCase = new CreateTaskUseCase(taskRepository, projectRepository)
+    taskRepository = new InMemoryTaskRepository()
+    userRepository = new InMemoryUsersRepository()
+
+    createProjectUseCase = new CreateProjectUseCase(
+      projectRepository,
+      userRepository
+    )
+    createTaskUseCase = new CreateTaskUseCase(
+      taskRepository,
+      projectRepository
+    )
+    createUserUseCase = new CreateUser(userRepository)
+
     sut = new DeleteTaskUseCase(taskRepository)
   })
 
@@ -27,8 +45,15 @@ describe('DeleteTaskUseCase', () => {
   })
 
   it('should delete task', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
     const project = await createProjectUseCase.execute({
-      name: 'project'
+      name: 'project',
+      userId: user.id
     })
 
     const task = await createTaskUseCase.execute({

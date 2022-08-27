@@ -1,19 +1,38 @@
-import { InMemoryProjectRepository, InMemoryTaskRepository } from '@tests/repositories'
+import {
+  InMemoryProjectRepository,
+  InMemoryTaskRepository,
+  InMemoryUsersRepository
+} from '@tests/repositories'
 import { UpdateTaskUseCase, CreateTaskUseCase } from '.'
 import { CreateProjectUseCase } from '../project'
+import { CreateUser } from '../users'
 
-let taskRepository: InMemoryTaskRepository
 let projectRepository: InMemoryProjectRepository
+let taskRepository: InMemoryTaskRepository
+let userRepository: InMemoryUsersRepository
+
 let createProjectUseCase: CreateProjectUseCase
 let createTaskUseCase: CreateTaskUseCase
+let createUserUseCase: CreateUser
+
 let sut: UpdateTaskUseCase
 
 describe('UpdateTaskUseCase', () => {
   beforeEach(() => {
-    taskRepository = new InMemoryTaskRepository()
     projectRepository = new InMemoryProjectRepository()
-    createTaskUseCase = new CreateTaskUseCase(taskRepository, projectRepository)
-    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    taskRepository = new InMemoryTaskRepository()
+    userRepository = new InMemoryUsersRepository()
+
+    createProjectUseCase = new CreateProjectUseCase(
+      projectRepository,
+      userRepository
+    )
+    createTaskUseCase = new CreateTaskUseCase(
+      taskRepository,
+      projectRepository
+    )
+    createUserUseCase = new CreateUser(userRepository)
+
     sut = new UpdateTaskUseCase(taskRepository, projectRepository)
   })
 
@@ -31,8 +50,15 @@ describe('UpdateTaskUseCase', () => {
   })
 
   it('should throw if project is not found', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
     const project = await createProjectUseCase.execute({
-      name: 'project'
+      name: 'project',
+      userId: user.id
     })
 
     const task = await createTaskUseCase.execute({
@@ -56,8 +82,15 @@ describe('UpdateTaskUseCase', () => {
   })
 
   it('should update task', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
     const project = await createProjectUseCase.execute({
-      name: 'project'
+      name: 'project',
+      userId: user.id
     })
 
     const task = {

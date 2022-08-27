@@ -17,17 +17,17 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
-  project   Project[]
+  projects  Project[]
 }
 
 model Project {
   id        String   @id @default(uuid())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
   userId    String
-  task      Task[]
+  tasks     Task[]
 }
 
 model Task {
@@ -38,6 +38,6 @@ model Task {
   finishDate  DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
-  project     Project  @relation(fields: [projectId], references: [id])
+  Project     Project  @relation(fields: [projectId], references: [id])
   projectId   String
 }

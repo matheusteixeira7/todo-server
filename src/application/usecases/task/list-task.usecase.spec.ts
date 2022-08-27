@@ -1,32 +1,51 @@
-import { ProjectRepository } from '@application/repositories'
 import {
   InMemoryProjectRepository,
-  InMemoryTaskRepository
+  InMemoryTaskRepository,
+  InMemoryUsersRepository
 } from '@tests/repositories'
 import { CreateProjectUseCase } from '../project'
+import { CreateUser } from '../users'
 import { CreateTaskUseCase, ListTaskUseCase } from './'
 
+let projectRepository: InMemoryProjectRepository
 let taskRepository: InMemoryTaskRepository
-let projectRepository: ProjectRepository
+let userRepository: InMemoryUsersRepository
+
 let createProjectUseCase: CreateProjectUseCase
 let createTaskUseCase: CreateTaskUseCase
+let createUserUseCase: CreateUser
+
 let sut: ListTaskUseCase
 
 describe('ListTaskUseCase', () => {
   beforeEach(() => {
-    taskRepository = new InMemoryTaskRepository()
     projectRepository = new InMemoryProjectRepository()
-    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    taskRepository = new InMemoryTaskRepository()
+    userRepository = new InMemoryUsersRepository()
+
+    createProjectUseCase = new CreateProjectUseCase(
+      projectRepository,
+      userRepository
+    )
     createTaskUseCase = new CreateTaskUseCase(
       taskRepository,
       projectRepository
     )
+    createUserUseCase = new CreateUser(userRepository)
+
     sut = new ListTaskUseCase(taskRepository)
   })
 
   it('should be able to return all tasks', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
     const project = await createProjectUseCase.execute({
-      name: 'project'
+      name: 'project',
+      userId: user.id
     })
 
     const task1 = await createTaskUseCase.execute({

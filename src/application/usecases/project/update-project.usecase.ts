@@ -1,30 +1,37 @@
-import { ProjectRepository } from '@application/repositories'
-import { Task } from '@domain/entities'
+import { ProjectRepository, UsersRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
 type ProjectProps = {
   id: string
   name: string
-  tasks: Task[]
+  userId: string
 }
 
 @injectable()
 export class UpdateProjectUseCase {
   constructor (
-    @inject('InMemoryProjectRepository')
-    private projectRepository: ProjectRepository
+    @inject('PrismaProjectRepository')
+    private projectRepository: ProjectRepository,
+    @inject('PrismaUserRepository')
+    private userRepository: UsersRepository
   ) {}
 
-  async execute ({ id, name, tasks }: ProjectProps) {
+  async execute ({ id, name, userId }: ProjectProps) {
     const project = await this.projectRepository.findById(id)
 
     if (!project) {
       throw new Error('Project not found')
     }
 
+    const user = await this.userRepository.findById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
     Object.assign(project, {
       name,
-      tasks,
+      userId,
       updatedAt: new Date()
     })
 

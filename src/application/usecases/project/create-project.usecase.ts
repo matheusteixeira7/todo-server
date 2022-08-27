@@ -1,26 +1,35 @@
-import { ProjectRepository } from '@application/repositories'
+import { ProjectRepository, UsersRepository } from '@application/repositories'
 import { Project } from '@domain/entities'
 import { inject, injectable } from 'tsyringe'
 
 type ProjectProps = {
   name: string
+  userId: string
 }
 
 @injectable()
 export class CreateProjectUseCase {
   constructor (
-    @inject('InMemoryProjectRepository')
-    private projectRepository: ProjectRepository
+    @inject('PrismaProjectRepository')
+    private projectRepository: ProjectRepository,
+    @inject('PrismaUserRepository')
+    private userRepository: UsersRepository
   ) {}
 
-  async execute ({ name }: ProjectProps) {
+  async execute ({ name, userId }: ProjectProps) {
     const projectExists = await this.projectRepository.findByName(name)
 
     if (projectExists) {
       throw new Error('Project already exists')
     }
 
-    const project = Project.create({ name })
+    const user = await this.userRepository.findById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const project = Project.create({ name, userId })
 
     return await this.projectRepository.create(project)
   }

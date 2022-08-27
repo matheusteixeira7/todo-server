@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe'
 @injectable()
 export class ListTaskUseCase {
   constructor (
-    @inject('InMemoryTaskRepository')
+    @inject('PrismaTaskRepository')
     private taskRepository: TaskRepository
   ) {}
 

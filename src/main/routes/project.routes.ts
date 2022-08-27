@@ -21,7 +21,8 @@ projectRouter.get('/:id',
 projectRouter.post('/',
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string().required()
+      name: Joi.string().required(),
+      userId: Joi.string().uuid().required()
     }
   }),
   projectController.create
@@ -39,8 +40,10 @@ projectRouter.put('/:id',
         name: Joi.string().required(),
         responsible: Joi.string().required(),
         status: Joi.string().required(),
-        finishDate: Joi.date().required()
-      })
+        finishDate: Joi.date().required(),
+        projectId: Joi.string().uuid().required()
+      }),
+      userId: Joi.string().uuid().required()
     }
   }),
   projectController.update

@@ -8,7 +8,7 @@ type ProjectProps = {
 @injectable()
 export class GetProjectUseCase {
   constructor (
-    @inject('InMemoryProjectRepository')
+    @inject('PrismaProjectRepository')
     private projectRepository: ProjectRepository
   ) {}
 

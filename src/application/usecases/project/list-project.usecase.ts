@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe'
 @injectable()
 export class ListProjectUseCase {
   constructor (
-    @inject('InMemoryProjectRepository')
+    @inject('PrismaProjectRepository')
     private projectRepository: ProjectRepository
   ) {}
 

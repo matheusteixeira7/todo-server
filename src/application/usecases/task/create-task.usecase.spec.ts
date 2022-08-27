@@ -1,34 +1,34 @@
-import { ProjectRepository, TaskRepository } from '@application/repositories'
-import { InMemoryProjectRepository, InMemoryTaskRepository } from '@tests/repositories'
+import {
+  InMemoryProjectRepository,
+  InMemoryTaskRepository,
+  InMemoryUsersRepository
+} from '@tests/repositories'
 import { CreateProjectUseCase } from '../project'
+import { CreateUser } from '../users'
 import { CreateTaskUseCase } from './'
 
 describe('CreateTaskUseCase', () => {
-  let taskRepository: TaskRepository
-  let projectRepository: ProjectRepository
+  let projectRepository: InMemoryProjectRepository
+  let taskRepository: InMemoryTaskRepository
+  let userRepository: InMemoryUsersRepository
+
   let createProjectUseCase: CreateProjectUseCase
+  let createUserUseCase: CreateUser
+
   let sut: CreateTaskUseCase
 
   beforeEach(() => {
-    taskRepository = new InMemoryTaskRepository()
     projectRepository = new InMemoryProjectRepository()
-    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    taskRepository = new InMemoryTaskRepository()
+    userRepository = new InMemoryUsersRepository()
+
+    createProjectUseCase = new CreateProjectUseCase(
+      projectRepository,
+      userRepository
+    )
+    createUserUseCase = new CreateUser(userRepository)
+
     sut = new CreateTaskUseCase(taskRepository, projectRepository)
-  })
-
-  it('should NOT be able to create a task with the same name', async () => {
-    const task = {
-      name: 'task',
-      responsible: 'task responsible',
-      status: 'pendente',
-      finishDate: new Date(),
-      projectId: 'project id'
-    }
-
-    expect(async () => {
-      await sut.execute(task)
-      await sut.execute(task)
-    }).rejects.toThrow()
   })
 
   it('should NOT be able to create a task with a non-existent project', async () => {
@@ -46,8 +46,15 @@ describe('CreateTaskUseCase', () => {
   })
 
   it('should be able to create a task', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
     const project = await createProjectUseCase.execute({
-      name: 'project'
+      name: 'project',
+      userId: user.id
     })
 
     const task = {

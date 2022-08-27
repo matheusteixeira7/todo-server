@@ -1,5 +1,3 @@
 export * from './prisma-user.repository'
-export * from './prisma-customer.repository'
-export * from './prisma-pet.repository'
-export * from './prisma-service.repository'
-export * from './prisma-transaction.repository'
+export * from './prisma-project.repository'
+export * from './prisma-task.repository'

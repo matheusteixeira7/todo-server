@@ -13,19 +13,13 @@ type TaskProps = {
 @injectable()
 export class CreateTaskUseCase {
   constructor (
-    @inject('InMemoryTaskRepository')
+    @inject('PrismaTaskRepository')
     private taskRepository: TaskRepository,
-    @inject('InMemoryProjectRepository')
+    @inject('PrismaProjectRepository')
     private projectRepository: ProjectRepository
   ) {}
 
   async execute ({ name, responsible, status, finishDate, projectId }: TaskProps) {
-    const taskExists = await this.taskRepository.findByName(name)
-
-    if (taskExists) {
-      throw new Error('Task already exists')
-    }
-
     const project = await this.projectRepository.findById(projectId)
 
     if (!project) {

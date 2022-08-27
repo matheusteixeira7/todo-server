@@ -8,7 +8,7 @@ type TaskProps = {
 @injectable()
 export class GetTaskUseCase {
   constructor (
-    @inject('InMemoryTaskRepository')
+    @inject('PrismaTaskRepository')
     private taskRepository: TaskRepository
   ) {}
 

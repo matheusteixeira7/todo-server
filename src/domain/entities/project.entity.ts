@@ -1,21 +1,21 @@
 import { randomUUID } from 'crypto'
-import { Task } from './task.entity'
 
 type IProjectProps = {
   name: string
+  userId: string
 }
 
 export class Project {
   id: string
   name: string
-  tasks: Task[]
+  userId: string
   createdAt?: Date
   updatedAt?: Date
 
   private constructor (props: IProjectProps) {
     this.id = this.id ?? randomUUID()
     this.name = props.name
-    this.tasks = []
+    this.userId = props.userId
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }
