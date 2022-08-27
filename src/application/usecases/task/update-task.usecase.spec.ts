@@ -46,7 +46,7 @@ describe('UpdateTaskUseCase', () => {
       projectId: 'any_project_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Task not found')
   })
 
   it('should throw if project is not found', async () => {
@@ -64,7 +64,7 @@ describe('UpdateTaskUseCase', () => {
     const task = await createTaskUseCase.execute({
       name: 'task',
       responsible: 'task responsible',
-      status: 'pendente',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })
@@ -78,7 +78,39 @@ describe('UpdateTaskUseCase', () => {
       projectId: 'invalid_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Project not found')
+  })
+
+  it('should throw if status is invalid', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
+    const project = await createProjectUseCase.execute({
+      name: 'project',
+      userId: user.id
+    })
+
+    const task = await createTaskUseCase.execute({
+      name: 'task',
+      responsible: 'task responsible',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
+      finishDate: new Date(),
+      projectId: project.id
+    })
+
+    const promise = sut.execute({
+      id: task.id,
+      name: 'any_name',
+      responsible: 'any_responsible',
+      status: 'invalid_status',
+      finishDate: new Date(),
+      projectId: project.id
+    })
+
+    await expect(promise).rejects.toThrowError('Invalid status')
   })
 
   it('should update task', async () => {
@@ -96,7 +128,7 @@ describe('UpdateTaskUseCase', () => {
     const task = {
       name: 'task',
       responsible: 'task responsible',
-      status: 'pendente',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     }
@@ -107,13 +139,13 @@ describe('UpdateTaskUseCase', () => {
       id: createdTask.id,
       name: 'updated task',
       responsible: 'updated task responsible',
-      status: 'updated status',
+      status: 'Pendente' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })
 
     expect(updatedTask.name).toBe('updated task')
     expect(updatedTask.responsible).toBe('updated task responsible')
-    expect(updatedTask.status).toBe('updated status')
+    expect(updatedTask.status).toBe('Pendente')
   })
 })
