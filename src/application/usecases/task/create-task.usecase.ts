@@ -20,7 +20,7 @@ export class CreateTaskUseCase {
     const taskExists = await this.taskRepository.findByName(name)
 
     if (taskExists) {
-      throw new Error('Project already exists')
+      throw new Error('Task already exists')
     }
 
     const task = Task.create({ name, responsible, status, finishDate })

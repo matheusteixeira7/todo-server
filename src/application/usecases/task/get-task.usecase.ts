@@ -16,7 +16,7 @@ export class GetTaskUseCase {
     const taskExists = await this.taskRepository.findById(id)
 
     if (!taskExists) {
-      throw new Error('Project not found')
+      throw new Error('Task not found')
     }
 
     return taskExists
