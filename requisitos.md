@@ -1,6 +1,6 @@
 Requisitos funcionais
 1. O usuário deverá ser capaz de inserir um novo projeto [x]
-2. O usuário deverá ser capaz de editar ou excluir um projeto []
+2. O usuário deverá ser capaz de editar ou excluir um projeto [x]
 3. O usuário deve ser capaz de criar uma tarefa em um projeto []
 4. O usuário deve ser capaz de excluir uma tarefa de um projeto []
 5. O usuário deve ser capaz de ver todas as tarefas de um projeto, e filtrá-las de acordo
