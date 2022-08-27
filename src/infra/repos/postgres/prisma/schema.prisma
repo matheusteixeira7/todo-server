@@ -11,52 +11,33 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  project   Project[]
 }
 
-model Service {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  price     Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
-
-model Pet {
+model Project {
   id        String   @id @default(uuid())
   name      String
-  specie    String
-  breed     String
-  owner     Customer @relation(fields: [ownerId], references: [id])
-  ownerId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  task      Task[]
 }
 
-model Customer {
-  id           String        @id @default(uuid())
-  name         String
-  email        String        @unique
-  phone        String
-  address      String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @default(now())
-  pets         Pet[]
-  transactions Transaction[]
-}
-
-model Transaction {
+model Task {
   id          String   @id @default(uuid())
-  customer    Customer @relation(fields: [customerId], references: [id])
-  customerId  String
-  isPaid      Boolean
-  totalPrice  Int
-  servicesIds String[]
+  name        String
+  responsible String
+  status      String
+  finishDate  DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
 }
