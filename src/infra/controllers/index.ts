@@ -1,6 +1,2 @@
-export * from './customer.controller'
-export * from './pet.controller'
-export * from './service.controller'
 export * from './session.controller'
 export * from './user.controller'
-export * from './transaction.controller'
