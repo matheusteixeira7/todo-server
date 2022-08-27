@@ -1,4 +1,4 @@
-import { TaskRepository } from '@application/repositories'
+import { ProjectRepository, TaskRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
 type TaskProps = {
@@ -7,20 +7,29 @@ type TaskProps = {
   responsible: string
   status: string
   finishDate: Date
+  projectId: string
 }
 
 @injectable()
 export class UpdateTaskUseCase {
   constructor (
+    @inject('InMemoryTaskRepository')
+    private taskRepository: TaskRepository,
     @inject('InMemoryProjectRepository')
-    private taskRepository: TaskRepository
+    private projectRepository: ProjectRepository
   ) {}
 
-  async execute ({ id, name, responsible, status, finishDate }: TaskProps) {
+  async execute ({ id, name, responsible, status, finishDate, projectId }: TaskProps) {
     const task = await this.taskRepository.findById(id)
 
     if (!task) {
       throw new Error('Task not found')
+    }
+
+    const project = await this.projectRepository.findById(projectId)
+
+    if (!project) {
+      throw new Error('Project not found')
     }
 
     Object.assign(task, {
@@ -28,6 +37,7 @@ export class UpdateTaskUseCase {
       responsible,
       status,
       finishDate,
+      projectId,
       updatedAt: new Date()
     })
 
