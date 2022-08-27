@@ -5,17 +5,18 @@ import {
 } from '@tests/repositories'
 import { CreateProjectUseCase } from '../project'
 import { CreateUser } from '../users'
-import { CreateTaskUseCase } from './'
+import { CreateTaskUseCase, FilterTaskUseCase } from './'
 
-describe('CreateTaskUseCase', () => {
+describe('FilterTaskUseCase', () => {
   let projectRepository: InMemoryProjectRepository
   let taskRepository: InMemoryTaskRepository
   let userRepository: InMemoryUsersRepository
 
   let createProjectUseCase: CreateProjectUseCase
+  let createTaskUseCase: CreateTaskUseCase
   let createUserUseCase: CreateUser
 
-  let sut: CreateTaskUseCase
+  let sut: FilterTaskUseCase
 
   beforeEach(() => {
     projectRepository = new InMemoryProjectRepository()
@@ -26,24 +27,22 @@ describe('CreateTaskUseCase', () => {
       projectRepository,
       userRepository
     )
+    createTaskUseCase = new CreateTaskUseCase(taskRepository, projectRepository)
     createUserUseCase = new CreateUser(userRepository)
 
-    sut = new CreateTaskUseCase(taskRepository, projectRepository)
+    sut = new FilterTaskUseCase(taskRepository, projectRepository)
   })
 
-  it('should NOT be able to create a task with a non-existent project', async () => {
-    const task = {
-      name: 'task',
-      responsible: 'task responsible',
-      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+  it('should NOT be able to filter a task with a non-existent project', async () => {
+    const filter = {
+      status: 'Concluída',
       projectId: 'invalid_id'
     }
 
-    await expect(sut.execute(task)).rejects.toThrowError('Project not found')
+    await expect(sut.execute(filter)).rejects.toThrowError('Project not found')
   })
 
-  it('should NOT be able to create a task with an invalid status', async () => {
+  it('should NOT be able to filter a task with an invalid status', async () => {
     const user = await createUserUseCase.execute({
       name: 'user',
       email: 'user@email.com',
@@ -58,7 +57,7 @@ describe('CreateTaskUseCase', () => {
     const task = {
       name: 'task',
       responsible: 'task responsible',
-      status: 'Invalid status' as 'Concluída' | 'Vencida' | 'Pendente',
+      status: 'Invalid status',
       finishDate: new Date(),
       projectId: project.id
     }
@@ -66,7 +65,7 @@ describe('CreateTaskUseCase', () => {
     await expect(sut.execute(task)).rejects.toThrowError('Invalid status')
   })
 
-  it('should be able to create a task', async () => {
+  it('should be able to filter a task', async () => {
     const user = await createUserUseCase.execute({
       name: 'any_name',
       email: 'any_email',
@@ -86,8 +85,15 @@ describe('CreateTaskUseCase', () => {
       projectId: project.id
     }
 
-    const createdTask = await sut.execute(task)
+    const createdTask = await createTaskUseCase.execute(task)
 
-    expect(createdTask).toHaveProperty('id')
+    const filter = {
+      status: 'Concluída',
+      projectId: project.id
+    }
+
+    const filteredTask = await sut.execute(filter)
+
+    expect(filteredTask).toEqual([createdTask])
   })
 })
