@@ -32,6 +32,10 @@ export class UpdateTaskUseCase {
       throw new Error('Project not found')
     }
 
+    if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
+      throw new Error('Invalid status')
+    }
+
     Object.assign(task, {
       name,
       responsible,
