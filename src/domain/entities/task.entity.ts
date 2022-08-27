@@ -5,6 +5,7 @@ type ITaskProps = {
   responsible: string
   status: string
   finishDate: Date
+  projectId: string
 }
 
 export class Task {
@@ -13,6 +14,7 @@ export class Task {
   responsible: string
   status: string
   finishDate: Date
+  projectId: string
   createdAt?: Date
   updatedAt?: Date
 
@@ -22,6 +24,7 @@ export class Task {
     this.responsible = props.responsible
     this.status = props.status
     this.finishDate = props.finishDate
+    this.projectId = props.projectId
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }
