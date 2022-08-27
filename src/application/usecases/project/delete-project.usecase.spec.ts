@@ -5,7 +5,7 @@ let projectRepository: InMemoryProjectRepository
 let createProjectUseCase: CreateProjectUseCase
 let sut: DeleteProjectUseCase
 
-describe('CreateProjectUseCase', () => {
+describe('DeleteProjectUseCase', () => {
   beforeEach(() => {
     projectRepository = new InMemoryProjectRepository()
     createProjectUseCase = new CreateProjectUseCase(projectRepository)
