@@ -1,14 +1,26 @@
-import { InMemoryTaskRepository } from '@tests/repositories'
+import { ProjectRepository } from '@application/repositories'
+import {
+  InMemoryProjectRepository,
+  InMemoryTaskRepository
+} from '@tests/repositories'
 import { CreateTaskUseCase, GetTaskUseCase } from '.'
-
-let taskRepository: InMemoryTaskRepository
-let createTaskUseCase: CreateTaskUseCase
-let sut: GetTaskUseCase
+import { CreateProjectUseCase } from '../project'
 
 describe('GetTaskUseCase', () => {
+  let taskRepository: InMemoryTaskRepository
+  let projectRepository: ProjectRepository
+  let createProjectUseCase: CreateProjectUseCase
+  let createTaskUseCase: CreateTaskUseCase
+  let sut: GetTaskUseCase
+
   beforeEach(() => {
     taskRepository = new InMemoryTaskRepository()
-    createTaskUseCase = new CreateTaskUseCase(taskRepository)
+    projectRepository = new InMemoryProjectRepository()
+    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    createTaskUseCase = new CreateTaskUseCase(
+      taskRepository,
+      projectRepository
+    )
     sut = new GetTaskUseCase(taskRepository)
   })
 
@@ -17,7 +29,17 @@ describe('GetTaskUseCase', () => {
   })
 
   it('should be able to return a task', async () => {
-    const task = await createTaskUseCase.execute({ name: 'Task 1', responsible: 'Responsible 1', status: 'Status 1', finishDate: new Date() })
+    const project = await createProjectUseCase.execute({
+      name: 'project'
+    })
+
+    const task = await createTaskUseCase.execute({
+      name: 'Task 1',
+      responsible: 'Responsible 1',
+      status: 'Status 1',
+      finishDate: new Date(),
+      projectId: project.id
+    })
 
     const result = await sut.execute({ id: task.id })
 

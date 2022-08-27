@@ -31,12 +31,16 @@ describe('UpdateTaskUseCase', () => {
   })
 
   it('should throw if project is not found', async () => {
+    const project = await createProjectUseCase.execute({
+      name: 'project'
+    })
+
     const task = await createTaskUseCase.execute({
       name: 'task',
       responsible: 'task responsible',
       status: 'pendente',
       finishDate: new Date(),
-      projectId: 'any_project_id'
+      projectId: project.id
     })
 
     const promise = sut.execute({

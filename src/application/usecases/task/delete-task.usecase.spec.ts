@@ -1,14 +1,20 @@
-import { InMemoryTaskRepository } from '@tests/repositories'
+import { ProjectRepository } from '@application/repositories'
+import { InMemoryProjectRepository, InMemoryTaskRepository } from '@tests/repositories'
+import { CreateProjectUseCase } from '../project'
 import { CreateTaskUseCase, DeleteTaskUseCase } from './'
 
 let taskRepository: InMemoryTaskRepository
+let projectRepository: ProjectRepository
+let createProjectUseCase: CreateProjectUseCase
 let createTaskUseCase: CreateTaskUseCase
 let sut: DeleteTaskUseCase
 
 describe('DeleteTaskUseCase', () => {
   beforeEach(() => {
     taskRepository = new InMemoryTaskRepository()
-    createTaskUseCase = new CreateTaskUseCase(taskRepository)
+    projectRepository = new InMemoryProjectRepository()
+    createProjectUseCase = new CreateProjectUseCase(projectRepository)
+    createTaskUseCase = new CreateTaskUseCase(taskRepository, projectRepository)
     sut = new DeleteTaskUseCase(taskRepository)
   })
 
@@ -21,11 +27,16 @@ describe('DeleteTaskUseCase', () => {
   })
 
   it('should delete task', async () => {
+    const project = await createProjectUseCase.execute({
+      name: 'project'
+    })
+
     const task = await createTaskUseCase.execute({
       name: 'Task',
       responsible: 'Responsible',
       status: 'Pending',
-      finishDate: new Date()
+      finishDate: new Date(),
+      projectId: project.id
     })
 
     await sut.execute({
