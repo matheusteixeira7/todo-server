@@ -1,5 +1,5 @@
 import { InMemoryProjectRepository } from '@tests/repositories'
-import { CreateProjectUseCase } from './create-project.usecase'
+import { CreateProjectUseCase } from './'
 
 let projectRepository: InMemoryProjectRepository
 let sut: CreateProjectUseCase
