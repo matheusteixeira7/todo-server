@@ -12,7 +12,7 @@ describe('UpdateTaskUseCase', () => {
     sut = new UpdateTaskUseCase(taskRepository)
   })
 
-  it('should throw if project is not found', async () => {
+  it('should throw if task is not found', async () => {
     const promise = sut.execute({
       id: 'invalid_id',
       name: 'any_name',
@@ -24,7 +24,7 @@ describe('UpdateTaskUseCase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('should update project', async () => {
+  it('should update task', async () => {
     const { id } = await createTaskUseCase.execute({
       name: 'any_name',
       responsible: 'any_responsible',
