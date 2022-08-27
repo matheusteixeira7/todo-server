@@ -1,4 +1,4 @@
-import { TaskRepository } from '@application/repositories'
+import { ProjectRepository, TaskRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
 type TaskProps = {
@@ -10,11 +10,19 @@ type TaskProps = {
 export class FilterTaskUseCase {
   constructor (
     @inject('PrismaTaskRepository')
-    private taskRepository: TaskRepository
+    private taskRepository: TaskRepository,
+    @inject('PrismaProjectRepository')
+    private projectRepository: ProjectRepository
 
   ) {}
 
   async execute ({ status, projectId }: TaskProps) {
+    const project = await this.projectRepository.findById(projectId)
+
+    if (!project) {
+      throw new Error('Project not found')
+    }
+
     if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
       throw new Error('Invalid status')
     }
