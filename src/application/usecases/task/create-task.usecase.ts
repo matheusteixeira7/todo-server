@@ -5,7 +5,7 @@ import { inject, injectable } from 'tsyringe'
 type TaskProps = {
   name: string
   responsible: string
-  status: string
+  status: 'Concluída' | 'Vencida' | 'Pendente'
   finishDate: Date
   projectId: string
 }
@@ -24,6 +24,10 @@ export class CreateTaskUseCase {
 
     if (!project) {
       throw new Error('Project not found')
+    }
+
+    if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
+      throw new Error('Invalid status')
     }
 
     const task = Task.create({ name, responsible, status, finishDate, projectId })
