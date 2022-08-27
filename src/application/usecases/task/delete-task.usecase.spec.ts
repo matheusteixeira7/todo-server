@@ -59,7 +59,7 @@ describe('DeleteTaskUseCase', () => {
     const task = await createTaskUseCase.execute({
       name: 'Task',
       responsible: 'Responsible',
-      status: 'Pending',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })

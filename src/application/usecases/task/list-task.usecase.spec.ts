@@ -51,14 +51,14 @@ describe('ListTaskUseCase', () => {
     const task1 = await createTaskUseCase.execute({
       name: 'Task 1',
       responsible: 'Responsible 1',
-      status: 'Status 1',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })
     const task2 = await createTaskUseCase.execute({
       name: 'Task 2',
       responsible: 'Responsible 2',
-      status: 'Status 2',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })

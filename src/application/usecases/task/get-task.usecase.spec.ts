@@ -55,7 +55,7 @@ describe('GetTaskUseCase', () => {
     const task = await createTaskUseCase.execute({
       name: 'Task 1',
       responsible: 'Responsible 1',
-      status: 'Status 1',
+      status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
       finishDate: new Date(),
       projectId: project.id
     })
