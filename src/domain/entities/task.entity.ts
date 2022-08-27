@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto'
 type ITaskProps = {
   name: string
   responsible: string
-  status: 'Concluída' | 'Vencida' | 'Pendente'
+  status: string
   finishDate: Date
   projectId: string
 }
@@ -12,7 +12,7 @@ export class Task {
   id: string
   name: string
   responsible: string
-  status: 'Concluída' | 'Vencida' | 'Pendente'
+  status: string
   finishDate: Date
   projectId: string
   createdAt?: Date

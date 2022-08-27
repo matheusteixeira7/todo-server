@@ -46,7 +46,6 @@ export class PrismaProjectRepository implements ProjectRepository {
       data: {
         name: project.name,
         userId: project.userId,
-        tasksIds: project.tasksIds,
         updatedAt: project.updatedAt
       }
     })

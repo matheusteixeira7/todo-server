@@ -57,3 +57,13 @@ taskRouter.delete('/:id',
   }),
   taskController.delete
 )
+
+taskRouter.get('/filter/:status/:projectId',
+  celebrate({
+    [Segments.PARAMS]: {
+      status: Joi.string().required(),
+      projectId: Joi.string().uuid().required()
+    }
+  }),
+  taskController.filterByStatus
+)

@@ -61,4 +61,8 @@ export class InMemoryTaskRepository implements TaskRepository {
 
     this.items.splice(index, 1)
   }
+
+  async filterByStatus (status: string, projectId: string): Promise<Task[]> {
+    return this.items.filter(t => t.status === status && t.projectId === projectId)
+  }
 }

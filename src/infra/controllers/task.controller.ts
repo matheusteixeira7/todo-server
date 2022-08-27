@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CreateTaskUseCase, DeleteTaskUseCase, GetTaskUseCase, ListTaskUseCase, UpdateTaskUseCase } from '@application/usecases/task'
+import { CreateTaskUseCase, DeleteTaskUseCase, GetTaskUseCase, ListTaskUseCase, UpdateTaskUseCase, FilterTaskUseCase } from '@application/usecases/task'
 import { container } from 'tsyringe'
 
 export class TaskController {
@@ -34,5 +34,12 @@ export class TaskController {
     const deleteTask = container.resolve(DeleteTaskUseCase)
     await deleteTask.execute({ id })
     return res.status(204).json()
+  }
+
+  async filterByStatus (req: Request, res: Response): Promise<Response> {
+    const { status, projectId } = req.params
+    const filterByStatus = container.resolve(FilterTaskUseCase)
+    const tasks = await filterByStatus.execute({ status, projectId })
+    return res.json(tasks)
   }
 }

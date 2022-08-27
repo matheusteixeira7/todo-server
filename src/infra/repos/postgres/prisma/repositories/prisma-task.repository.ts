@@ -21,6 +21,15 @@ export class PrismaTaskRepository implements TaskRepository {
     })
   }
 
+  async filterByStatus (status: string, projectId: string): Promise<Task[] | null> {
+    return await prisma.task.findMany({
+      where: {
+        status,
+        projectId
+      }
+    })
+  }
+
   async create (task: Task): Promise<Task> {
     return await prisma.task.create({
       data: {
