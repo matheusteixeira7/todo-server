@@ -1,0 +1,24 @@
+import { TaskRepository } from '@application/repositories'
+import { inject, injectable } from 'tsyringe'
+
+type TaskProps = {
+  id: string
+}
+
+@injectable()
+export class GetTaskUseCase {
+  constructor (
+    @inject('InMemoryTaskRepository')
+    private taskRepository: TaskRepository
+  ) {}
+
+  async execute ({ id }: TaskProps) {
+    const taskExists = await this.taskRepository.findById(id)
+
+    if (!taskExists) {
+      throw new Error('Project not found')
+    }
+
+    return taskExists
+  }
+}
