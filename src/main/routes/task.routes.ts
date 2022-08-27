@@ -24,7 +24,8 @@ taskRouter.post('/',
       name: Joi.string().required(),
       responsible: Joi.string().required(),
       status: Joi.string().required(),
-      finishDate: Joi.date().required()
+      finishDate: Joi.date().required(),
+      projectId: Joi.string().uuid().required()
     }
   }),
   taskController.create
@@ -40,7 +41,8 @@ taskRouter.put('/:id',
       name: Joi.string().required(),
       responsible: Joi.string().required(),
       status: Joi.string().required(),
-      finishDate: Joi.date().required()
+      finishDate: Joi.date().required(),
+      projectId: Joi.string().uuid().required()
     }
   }),
   taskController.update
