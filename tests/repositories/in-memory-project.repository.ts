@@ -28,6 +28,16 @@ export class InMemoryProjectRepository implements ProjectRepository {
     return project
   }
 
+  async findByUser (id: string): Promise<Project[] | null> {
+    const projects = this.items.filter(project => project.userId === id)
+
+    if (!projects) {
+      return null
+    }
+
+    return projects
+  }
+
   async create (project: Project): Promise<Project> {
     const findIndex = this.items.findIndex(item => item.id === project.id)
 

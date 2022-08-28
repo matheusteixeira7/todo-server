@@ -29,6 +29,14 @@ export class PrismaProjectRepository implements ProjectRepository {
     })
   }
 
+  async findByUser (id: string): Promise<Project[] | null> {
+    return await prisma.project.findMany({
+      where: {
+        userId: id
+      }
+    })
+  }
+
   async create (project: Project): Promise<Project> {
     return await prisma.project.create({
       data: {

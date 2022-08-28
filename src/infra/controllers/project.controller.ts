@@ -1,11 +1,18 @@
 import { Request, Response } from 'express'
-import { CreateProjectUseCase, DeleteProjectUseCase, GetProjectUseCase, ListProjectUseCase, UpdateProjectUseCase } from '@application/usecases/project'
+import { CreateProjectUseCase, DeleteProjectUseCase, GetProjectUseCase, ListProjectUseCase, UpdateProjectUseCase, FilterProjectByUserUseCase } from '@application/usecases/project'
 import { container } from 'tsyringe'
 
 export class ProjectController {
   async list (req: Request, res: Response): Promise<Response> {
     const listProject = container.resolve(ListProjectUseCase)
     const projects = await listProject.execute()
+    return res.json(projects)
+  }
+
+  async filterByUser (req: Request, res: Response): Promise<Response> {
+    const { id } = req.params
+    const filterProjectByUser = container.resolve(FilterProjectByUserUseCase)
+    const projects = await filterProjectByUser.execute({ id })
     return res.json(projects)
   }
 

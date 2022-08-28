@@ -18,6 +18,16 @@ projectRouter.get('/:id',
   projectController.get
 )
 
+projectRouter.get('/filterByUser/:id',
+  isAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  projectController.filterByUser
+)
+
 projectRouter.post('/',
   celebrate({
     [Segments.BODY]: {
