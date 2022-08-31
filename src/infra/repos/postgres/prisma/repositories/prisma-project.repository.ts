@@ -64,6 +64,12 @@ export class PrismaProjectRepository implements ProjectRepository {
   }
 
   async delete (id: string): Promise<void> {
+    await prisma.task.deleteMany({
+      where: {
+        projectId: id
+      }
+    })
+
     await prisma.project.delete({
       where: {
         id

@@ -46,13 +46,6 @@ projectRouter.put('/:id',
     },
     [Segments.BODY]: {
       name: Joi.string().required(),
-      tasks: Joi.array().items({
-        name: Joi.string().required(),
-        responsible: Joi.string().required(),
-        status: Joi.string().required(),
-        finishDate: Joi.date().required(),
-        projectId: Joi.string().uuid().required()
-      }),
       userId: Joi.string().uuid().required()
     }
   }),
