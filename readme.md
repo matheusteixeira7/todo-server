@@ -60,9 +60,9 @@ Para rodar este projeto em modo de desenvolvimento, você irá precisar da Docke
 **Cloning the Repository**
 
 ```
-$ gh repo clone matheusteixeira7/shiny-paws
+$ gh repo clone matheusteixeira7/todo-server
 
-$ cd shiny-paws
+$ cd todo-server
 ```
 
 Crie um arquivo .env e cole os dados contigos no arquivo .env.example
