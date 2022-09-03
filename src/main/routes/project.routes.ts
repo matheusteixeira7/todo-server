@@ -29,6 +29,7 @@ projectRouter.get('/filterByUser/:id',
 )
 
 projectRouter.post('/',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
