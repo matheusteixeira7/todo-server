@@ -1,0 +1,426 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Todo API",
+    "version": "1.0.0",
+    "description": "A simple Todo API",
+    "contact": {
+      "name": "API Support",
+      "email": "matheusteixeira@devnine.tech"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/project": {
+      "post": {
+        "summary": "Create a new project",
+        "description": "Create a new project",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "createProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "create project": {
+                  "value": {
+                    "name": "Project 1",
+                    "userId": "542e3e99-d3ed-4b04-b07a-06b54ea2330b"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "get": {
+        "summary": "List all projects",
+        "description": "List all projects",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "listProjects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/project/filterByUser/{id}": {
+      "get": {
+        "summary": "List all projects by user",
+        "description": "List all projects by user",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "listProjectsByUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Filter projects by user id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/project/{id}": {
+      "get": {
+        "summary": "Get a project by id",
+        "description": "Get a project by id",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getProjectById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Get a project by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a project by id",
+        "description": "Update a project by id",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "updateProjectById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Update a project by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "update project": {
+                  "value": {
+                    "name": "Project 1",
+                    "userId": "542e3e99-d3ed-4b04-b07a-06b54ea2330b"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a project by id",
+        "description": "Delete a project by id",
+        "tag": ["project"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "deleteProjectById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Delete a project by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "summary": "Create a session",
+        "description": "Create a session",
+        "tag": ["session"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "createSession",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "create session": {
+                  "value": {
+                    "email": "test@email.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/session"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Project id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Project name"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Project creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Project update date"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User id"
+          }
+        }
+      },
+      "session": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "User id"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User password"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "User creation date"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "User update date"
+              }
+            }
+          },
+          "token": {
+            "type": "string",
+            "description": "User token"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
