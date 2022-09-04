@@ -9,7 +9,7 @@ import routes from './routes'
 import express, { json, NextFunction, Request, Response } from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from './swagger.json'
-import { CustomError } from '@application/errors/custom-error'
+import { CustomError } from '@application/errors'
 
 const app = express()
 app.use(cors())
