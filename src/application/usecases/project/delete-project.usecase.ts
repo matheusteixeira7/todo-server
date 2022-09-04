@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { ProjectRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -16,7 +17,7 @@ export class DeleteProjectUseCase {
     const project = await this.projectRepository.findById(id)
 
     if (!project) {
-      throw new Error('Project not found')
+      throw new CustomError(404, 'Project not found')
     }
 
     await this.projectRepository.delete(project.id)

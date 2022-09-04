@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { ProjectRepository, UsersRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -20,13 +21,13 @@ export class UpdateProjectUseCase {
     const project = await this.projectRepository.findById(id)
 
     if (!project) {
-      throw new Error('Project not found')
+      throw new CustomError(404, 'Project not found')
     }
 
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new CustomError(404, 'User not found')
     }
 
     Object.assign(project, {

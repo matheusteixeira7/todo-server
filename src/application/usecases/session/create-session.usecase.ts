@@ -1,4 +1,4 @@
-import { InvalidParamError } from '@application/errors'
+import { CustomError } from '@application/errors'
 import { UsersRepository } from '@application/repositories'
 import { User } from '@domain/entities'
 import { HashHandler, JwtTokenHandler } from '@infra/gateways'
@@ -25,13 +25,13 @@ export class CreateSession {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new InvalidParamError('User not found.')
+      throw new CustomError(404, 'User not found.')
     }
 
     const passwordConfirmed = await new HashHandler().compare(password, user.password)
 
     if (!passwordConfirmed) {
-      throw new InvalidParamError('Incorrect password.')
+      throw new CustomError(401, 'Incorrect password.')
     }
 
     const token = await new JwtTokenHandler().generate(user.id)

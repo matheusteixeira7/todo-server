@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { ProjectRepository, UsersRepository } from '@application/repositories'
 import { Project } from '@domain/entities'
 import { inject, injectable } from 'tsyringe'
@@ -20,13 +21,13 @@ export class CreateProjectUseCase {
     const projectExists = await this.projectRepository.findByName(name)
 
     if (projectExists) {
-      throw new Error('Project already exists')
+      throw new CustomError(409, 'Project already exists')
     }
 
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new CustomError(404, 'User not found')
     }
 
     const project = Project.create({ name, userId })

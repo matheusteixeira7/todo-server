@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { ProjectRepository, UsersRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -19,7 +20,7 @@ export class FilterProjectByUserUseCase {
     const user = await this.userRepository.findById(id)
 
     if (!user) {
-      throw new Error('User not found')
+      throw new CustomError(404, 'User not found')
     }
 
     return await this.projectRepository.findByUser(id)
