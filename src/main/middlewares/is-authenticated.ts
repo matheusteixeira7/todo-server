@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { JwtTokenHandler } from '@infra/gateways'
-import { InvalidParamError } from '@application/errors'
+import { CustomError } from '@application/errors'
 
 export const isAuthenticated = async (
   req: Request,
@@ -10,7 +10,7 @@ export const isAuthenticated = async (
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    throw new InvalidParamError('JWT Token is missing.')
+    throw new CustomError(401, 'JWT Token is missing.')
   }
   const [, token] = authHeader.split(' ')
 
@@ -23,6 +23,6 @@ export const isAuthenticated = async (
 
     return next()
   } catch {
-    throw new InvalidParamError('Invalid JWT Token.')
+    throw new CustomError(401, 'Invalid JWT Token.')
   }
 }
