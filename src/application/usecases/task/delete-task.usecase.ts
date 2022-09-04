@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { TaskRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -16,7 +17,7 @@ export class DeleteTaskUseCase {
     const task = await this.taskRepository.findById(id)
 
     if (!task) {
-      throw new Error('Task not found')
+      throw new CustomError(404, 'Task not found')
     }
 
     await this.taskRepository.delete(task.id)

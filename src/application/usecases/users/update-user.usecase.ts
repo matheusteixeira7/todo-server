@@ -1,7 +1,7 @@
 import { UsersRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 import { HashHandler } from '@infra/gateways'
-import { EmailInUseError, InvalidParamError } from '@application/errors'
+import { CustomError } from '@application/errors'
 
 type UserProps = {
   id: string
@@ -22,24 +22,24 @@ export class UpdateUser {
     const user = await this.usersRepository.findById(id)
 
     if (!user) {
-      throw new InvalidParamError('User not found.')
+      throw new CustomError(404, 'User not found.')
     }
 
     const userUpdateEmail = await this.usersRepository.findByEmail(email)
 
     if (userUpdateEmail && userUpdateEmail.id !== id) {
-      throw new EmailInUseError()
+      throw new CustomError(400, 'Email already in use')
     }
 
     if (password && !oldPassword) {
-      throw new InvalidParamError('Old password is required')
+      throw new CustomError(400, 'Old password is required')
     }
 
     if (password && oldPassword) {
       const checkOldPassword = await new HashHandler().compare(oldPassword, user.password)
 
       if (!checkOldPassword) {
-        throw new Error('Old password does not match')
+        throw new CustomError(401, 'Old password does not match')
       }
 
       user.password = await new HashHandler().generate(password)

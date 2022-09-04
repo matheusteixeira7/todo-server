@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { ProjectRepository, TaskRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -20,11 +21,11 @@ export class FilterTaskUseCase {
     const project = await this.projectRepository.findById(projectId)
 
     if (!project) {
-      throw new Error('Project not found')
+      throw new CustomError(404, 'Project not found')
     }
 
     if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
-      throw new Error('Invalid status')
+      throw new CustomError(400, 'Invalid status')
     }
 
     return await this.taskRepository.filterByStatus(status, projectId)

@@ -19,7 +19,7 @@ describe('Update user use case', () => {
       email: 'doe@example.com',
       password: '123456',
       oldPassword: '123456'
-    })).rejects.toThrow()
+    })).rejects.toThrowError('User not found.')
   })
 
   it('should throw error if email already exists', async () => {
@@ -42,7 +42,7 @@ describe('Update user use case', () => {
       id: user2.id,
       name: 'John Doe',
       email: 'doe@email.com'
-    })).rejects.toThrow()
+    })).rejects.toThrowError('Email already in use')
   })
 
   it('should not be able to update password if old password does not match', async () => {
@@ -129,7 +129,7 @@ describe('Update user use case', () => {
       name: 'John Doe',
       email: 'doe@email.com',
       password: '123456'
-    })).rejects.toThrow()
+    })).rejects.toThrowError('Old password is required')
   })
 
   it('should be able to update a user password', async () => {

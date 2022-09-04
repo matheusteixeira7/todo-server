@@ -23,7 +23,7 @@ describe('Create user use case', () => {
       name: 'Diego',
       email: 'doe@example.com',
       password: '123456'
-    })).rejects.toThrow()
+    })).rejects.toThrowError('Email already in use')
   })
 
   it('should be able to create a new user', async () => {

@@ -13,7 +13,7 @@ describe('Get user use case', () => {
   it('should throw error if user do not exists', async () => {
     await expect(sut.execute({
       id: '1'
-    })).rejects.toThrow()
+    })).rejects.toThrowError('User not found.')
   })
 
   it('should be able to get an user', async () => {

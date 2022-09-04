@@ -1,3 +1,4 @@
+import { CustomError } from '@application/errors'
 import { TaskRepository } from '@application/repositories'
 import { inject, injectable } from 'tsyringe'
 
@@ -16,7 +17,7 @@ export class GetTaskUseCase {
     const taskExists = await this.taskRepository.findById(id)
 
     if (!taskExists) {
-      throw new Error('Task not found')
+      throw new CustomError(404, 'Task not found')
     }
 
     return taskExists

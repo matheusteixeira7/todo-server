@@ -2,7 +2,7 @@ import { User } from '@domain/entities'
 import { HashHandler } from '@infra/gateways'
 import { inject, injectable } from 'tsyringe'
 import { UsersRepository } from '@application/repositories'
-import { EmailInUseError } from '@application/errors'
+import { CustomError } from '@application/errors'
 
 type UserProps = {
   name: string
@@ -21,7 +21,7 @@ export class CreateUser {
     const user = await this.usersRepository.findByEmail(email)
 
     if (user) {
-      throw new EmailInUseError()
+      throw new CustomError(400, 'Email already in use')
     }
 
     const hashedPassword = await new HashHandler().generate(password)
