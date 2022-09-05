@@ -343,6 +343,494 @@
           }
         }
       }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "description": "Create a user",
+        "tag": ["user"],
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "create user": {
+                  "value": {
+                    "name": "John Doe",
+                    "email": "doe@email.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already in use"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all users",
+        "description": "Get all users",
+        "tag": ["user"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a user by id",
+        "description": "Get a user by id",
+        "tag": ["user"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Get a user by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by id",
+        "description": "Update a user by id",
+        "tag": ["user"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "updateUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Update a user by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "oldPassword": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "update user": {
+                  "value": {
+                    "name": "John Doe",
+                    "email": "doe2@email.com",
+                    "password": "123456",
+                    "oldPassword": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by id",
+        "description": "Delete a user by id",
+        "tag": ["user"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "deleteUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Delete a user by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/task": {
+      "post": {
+        "summary": "Create a task",
+        "description": "Create a task",
+        "tag": ["task"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "createTask",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "dueDate": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "create task": {
+                  "value": {
+                    "title": "Task 1",
+                    "description": "Task 1 description",
+                    "dueDate": "2021-01-01",
+                    "userId": "5f9f1b9b9b9b9b9b9b9b9b9b"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all tasks",
+        "description": "Get all tasks",
+        "tag": ["task"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getAllTasks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/task/{id}": {
+      "get": {
+        "summary": "Get a task by id",
+        "description": "Get a task by id",
+        "tag": ["task"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getTaskById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Get a task by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a task by id",
+        "description": "Update a task by id",
+        "tag": ["task"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "updateTaskById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Update a task by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "dueDate": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "update task": {
+                  "value": {
+                    "name": "Task 1",
+                    "responsible": "John Doe",
+                    "dueDate": "2023-01-01",
+                    "projectId": "11ae9966-b836-45ca-806f-4e2e39ee5d79",
+                    "status": "Pendente"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a task by id",
+        "description": "Delete a task by id",
+        "tag": ["task"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "deleteTaskById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Delete a task by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -411,6 +899,72 @@
           "token": {
             "type": "string",
             "description": "User token"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User id"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "User creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "User update date"
+          }
+        }
+      },
+      "task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Task id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Task name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Task description"
+          },
+          "status": {
+            "type": "string",
+            "description": "Task status"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task update date"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Project id"
           }
         }
       }
