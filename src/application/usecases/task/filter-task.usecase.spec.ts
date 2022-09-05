@@ -58,7 +58,7 @@ describe('FilterTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Invalid status',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     }
 
@@ -81,7 +81,7 @@ describe('FilterTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     }
 

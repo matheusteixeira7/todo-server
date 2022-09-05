@@ -42,7 +42,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'any_name',
       responsible: 'any_responsible',
       status: 'any_status',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: 'any_project_id'
     })
 
@@ -65,7 +65,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 
@@ -74,7 +74,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'any_name',
       responsible: 'any_responsible',
       status: 'any_status',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: 'invalid_id'
     })
 
@@ -97,7 +97,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 
@@ -106,7 +106,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'any_name',
       responsible: 'any_responsible',
       status: 'invalid_status',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 
@@ -129,7 +129,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     }
 
@@ -140,7 +140,7 @@ describe('UpdateTaskUseCase', () => {
       name: 'updated task',
       responsible: 'updated task responsible',
       status: 'Pendente' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 

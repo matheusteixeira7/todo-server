@@ -56,7 +56,7 @@ describe('GetTaskUseCase', () => {
       name: 'Task 1',
       responsible: 'Responsible 1',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 

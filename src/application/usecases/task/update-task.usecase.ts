@@ -7,7 +7,7 @@ type TaskProps = {
   name: string
   responsible: string
   status: string
-  finishDate: Date
+  dueDate: Date
   projectId: string
 }
 
@@ -20,7 +20,7 @@ export class UpdateTaskUseCase {
     private projectRepository: ProjectRepository
   ) {}
 
-  async execute ({ id, name, responsible, status, finishDate, projectId }: TaskProps) {
+  async execute ({ id, name, responsible, status, dueDate, projectId }: TaskProps) {
     const task = await this.taskRepository.findById(id)
 
     if (!task) {
@@ -41,7 +41,7 @@ export class UpdateTaskUseCase {
       name,
       responsible,
       status,
-      finishDate,
+      dueDate,
       projectId,
       updatedAt: new Date()
     })

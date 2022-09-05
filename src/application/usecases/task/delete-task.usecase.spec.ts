@@ -60,7 +60,7 @@ describe('DeleteTaskUseCase', () => {
       name: 'Task',
       responsible: 'Responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     })
 

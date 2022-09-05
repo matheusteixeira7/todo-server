@@ -36,7 +36,7 @@ export class PrismaTaskRepository implements TaskRepository {
         name: task.name,
         responsible: task.responsible,
         status: task.status,
-        finishDate: task.finishDate,
+        dueDate: task.dueDate,
         projectId: task.projectId
       }
     })
@@ -51,7 +51,7 @@ export class PrismaTaskRepository implements TaskRepository {
         name: task.name,
         responsible: task.responsible,
         status: task.status,
-        finishDate: task.finishDate,
+        dueDate: task.dueDate,
         projectId: task.projectId,
         updatedAt: task.updatedAt
       }

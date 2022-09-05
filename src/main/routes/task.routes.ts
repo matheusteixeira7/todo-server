@@ -24,7 +24,7 @@ taskRouter.post('/',
       name: Joi.string().required(),
       responsible: Joi.string().required(),
       status: Joi.string().required(),
-      finishDate: Joi.date().required(),
+      dueDate: Joi.date().required(),
       projectId: Joi.string().uuid().required()
     }
   }),
@@ -41,7 +41,7 @@ taskRouter.put('/:id',
       name: Joi.string().required(),
       responsible: Joi.string().required(),
       status: Joi.string().required(),
-      finishDate: Joi.date().required(),
+      dueDate: Joi.date().required(),
       projectId: Joi.string().uuid().required()
     }
   }),

@@ -4,7 +4,7 @@ type ITaskProps = {
   name: string
   responsible: string
   status: string
-  finishDate: Date
+  dueDate: Date
   projectId: string
 }
 
@@ -13,7 +13,7 @@ export class Task {
   name: string
   responsible: string
   status: string
-  finishDate: Date
+  dueDate: Date
   projectId: string
   createdAt?: Date
   updatedAt?: Date
@@ -23,7 +23,7 @@ export class Task {
     this.name = props.name
     this.responsible = props.responsible
     this.status = props.status
-    this.finishDate = props.finishDate
+    this.dueDate = props.dueDate
     this.projectId = props.projectId
     this.createdAt = new Date()
     this.updatedAt = new Date()

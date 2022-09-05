@@ -36,7 +36,7 @@ describe('CreateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: 'invalid_id'
     }
 
@@ -59,7 +59,7 @@ describe('CreateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Invalid status' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     }
 
@@ -82,7 +82,7 @@ describe('CreateTaskUseCase', () => {
       name: 'task',
       responsible: 'task responsible',
       status: 'Concluída' as 'Concluída' | 'Vencida' | 'Pendente',
-      finishDate: new Date(),
+      dueDate: new Date(),
       projectId: project.id
     }
 

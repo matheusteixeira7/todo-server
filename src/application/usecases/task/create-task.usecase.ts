@@ -7,7 +7,7 @@ type TaskProps = {
   name: string
   responsible: string
   status: 'Concluída' | 'Vencida' | 'Pendente'
-  finishDate: Date
+  dueDate: Date
   projectId: string
 }
 
@@ -20,7 +20,7 @@ export class CreateTaskUseCase {
     private projectRepository: ProjectRepository
   ) {}
 
-  async execute ({ name, responsible, status, finishDate, projectId }: TaskProps) {
+  async execute ({ name, responsible, status, dueDate, projectId }: TaskProps) {
     const project = await this.projectRepository.findById(projectId)
 
     if (!project) {
@@ -31,7 +31,7 @@ export class CreateTaskUseCase {
       throw new CustomError(400, 'Status inválido')
     }
 
-    const task = Task.create({ name, responsible, status, finishDate, projectId })
+    const task = Task.create({ name, responsible, status, dueDate, projectId })
 
     return await this.taskRepository.create(task)
   }

@@ -35,7 +35,7 @@ model Task {
   name        String
   responsible String
   status      String
-  finishDate  DateTime
+  dueDate     DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
   Project     Project  @relation(fields: [projectId], references: [id])
