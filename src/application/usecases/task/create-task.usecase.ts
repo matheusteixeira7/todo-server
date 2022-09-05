@@ -24,11 +24,11 @@ export class CreateTaskUseCase {
     const project = await this.projectRepository.findById(projectId)
 
     if (!project) {
-      throw new CustomError(404, 'Project not found')
+      throw new CustomError(404, 'Projeto não encontrado')
     }
 
     if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
-      throw new CustomError(400, 'Invalid status')
+      throw new CustomError(400, 'Status inválido')
     }
 
     const task = Task.create({ name, responsible, status, finishDate, projectId })

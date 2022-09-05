@@ -22,24 +22,24 @@ export class UpdateUser {
     const user = await this.usersRepository.findById(id)
 
     if (!user) {
-      throw new CustomError(404, 'User not found.')
+      throw new CustomError(404, 'Usuário não encontrado')
     }
 
     const userUpdateEmail = await this.usersRepository.findByEmail(email)
 
     if (userUpdateEmail && userUpdateEmail.id !== id) {
-      throw new CustomError(400, 'Email already in use')
+      throw new CustomError(400, 'Email já cadastrado')
     }
 
     if (password && !oldPassword) {
-      throw new CustomError(400, 'Old password is required')
+      throw new CustomError(400, 'Senha antiga não informada')
     }
 
     if (password && oldPassword) {
       const checkOldPassword = await new HashHandler().compare(oldPassword, user.password)
 
       if (!checkOldPassword) {
-        throw new CustomError(401, 'Old password does not match')
+        throw new CustomError(401, 'Senha antiga não confere')
       }
 
       user.password = await new HashHandler().generate(password)

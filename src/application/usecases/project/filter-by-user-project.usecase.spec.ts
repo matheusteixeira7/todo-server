@@ -28,7 +28,7 @@ describe('FilterProjectByUserUseCase', () => {
   })
 
   it('should NOT be able to filter a project with a non-existent user', async () => {
-    await expect(sut.execute({ id: 'any_id' })).rejects.toThrowError('User not found')
+    await expect(sut.execute({ id: 'any_id' })).rejects.toThrowError('Usuário não encontrado')
   })
 
   it('should be able to filter project by user', async () => {

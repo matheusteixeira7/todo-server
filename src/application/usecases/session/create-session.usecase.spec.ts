@@ -16,7 +16,7 @@ describe('Create session use case', () => {
     await expect(sut.execute({
       email: 'doe@example.com',
       password: '123456'
-    })).rejects.toThrowError('User not found.')
+    })).rejects.toThrowError('Usuário não encontrado')
   })
 
   it('should not be able to create a session if password does not match', async () => {
@@ -31,7 +31,7 @@ describe('Create session use case', () => {
     await expect(sut.execute({
       email: 'doe@email.com',
       password: '654321'
-    })).rejects.toThrowError('Incorrect password.')
+    })).rejects.toThrowError('Senha incorreta')
   })
 
   it('should return a token and a user', async () => {

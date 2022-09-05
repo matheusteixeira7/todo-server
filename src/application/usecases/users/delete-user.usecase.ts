@@ -17,7 +17,7 @@ export class DeleteUser {
     const user = await this.usersRepository.findById(id)
 
     if (!user) {
-      throw new CustomError(404, 'User not found.')
+      throw new CustomError(404, 'Usuário não encontrado')
     }
 
     this.usersRepository.delete(id)

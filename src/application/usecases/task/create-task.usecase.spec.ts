@@ -40,7 +40,7 @@ describe('CreateTaskUseCase', () => {
       projectId: 'invalid_id'
     }
 
-    await expect(sut.execute(task)).rejects.toThrowError('Project not found')
+    await expect(sut.execute(task)).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should NOT be able to create a task with an invalid status', async () => {
@@ -63,7 +63,7 @@ describe('CreateTaskUseCase', () => {
       projectId: project.id
     }
 
-    await expect(sut.execute(task)).rejects.toThrowError('Invalid status')
+    await expect(sut.execute(task)).rejects.toThrowError('Status inválido')
   })
 
   it('should be able to create a task', async () => {

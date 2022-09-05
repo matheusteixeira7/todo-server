@@ -24,17 +24,17 @@ export class UpdateTaskUseCase {
     const task = await this.taskRepository.findById(id)
 
     if (!task) {
-      throw new CustomError(404, 'Task not found')
+      throw new CustomError(404, 'Tarefa não encontrada')
     }
 
     const project = await this.projectRepository.findById(projectId)
 
     if (!project) {
-      throw new CustomError(404, 'Project not found')
+      throw new CustomError(404, 'Projeto não encontrado')
     }
 
     if (status !== 'Concluída' && status !== 'Vencida' && status !== 'Pendente') {
-      throw new CustomError(400, 'Invalid status')
+      throw new CustomError(400, 'Status inválido')
     }
 
     Object.assign(task, {

@@ -19,20 +19,39 @@ describe('CreateProjectUseCase', () => {
 
     createUserUseCase = new CreateUser(userRepository)
 
-    sut = new CreateProjectUseCase(projectRepository, userRepository)
+    sut = new CreateProjectUseCase(
+      projectRepository,
+      userRepository
+    )
   })
 
   it('should NOT be able to create a project with the same name', async () => {
-    expect(async () => {
-      await sut.execute({ name: 'project', userId: 'any_id' })
-      await sut.execute({ name: 'project', userId: 'any_id' })
-    }).rejects.toThrow()
+    const user = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_email',
+      password: 'any_password'
+    })
+
+    await sut.execute({
+      name: 'any_name',
+      userId: user.id
+    })
+
+    const promise = sut.execute({
+      name: 'any_name',
+      userId: user.id
+    })
+
+    await expect(promise).rejects.toThrowError('Projeto já existe')
   })
 
   it('should NOT be able to create a project with a non-existent user', async () => {
-    expect(async () => {
-      await sut.execute({ name: 'project', userId: 'non-existent-user' })
-    }).rejects.toThrow()
+    const promise = sut.execute({
+      name: 'any_name',
+      userId: 'invalid_id'
+    })
+
+    await expect(promise).rejects.toThrowError('Usuário não encontrado')
   })
 
   it('should be able to create a project', async () => {
@@ -42,8 +61,13 @@ describe('CreateProjectUseCase', () => {
       password: 'any_password'
     })
 
-    const project = await sut.execute({ name: 'project', userId: user.id })
+    const project = await sut.execute({
+      name: 'any_name',
+      userId: user.id
+    })
 
     expect(project).toHaveProperty('id')
+    expect(project.name).toBe('any_name')
+    expect(project.userId).toBe(user.id)
   })
 })

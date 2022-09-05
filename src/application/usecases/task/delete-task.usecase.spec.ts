@@ -41,7 +41,7 @@ describe('DeleteTaskUseCase', () => {
       id: 'invalid_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Tarefa não encontrada')
   })
 
   it('should delete task', async () => {

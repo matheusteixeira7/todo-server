@@ -25,13 +25,13 @@ export class CreateSession {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new CustomError(404, 'User not found.')
+      throw new CustomError(404, 'Usuário não encontrado')
     }
 
     const passwordConfirmed = await new HashHandler().compare(password, user.password)
 
     if (!passwordConfirmed) {
-      throw new CustomError(401, 'Incorrect password.')
+      throw new CustomError(401, 'Senha incorreta')
     }
 
     const token = await new JwtTokenHandler().generate(user.id)

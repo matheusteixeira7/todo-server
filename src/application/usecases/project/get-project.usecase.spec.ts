@@ -28,7 +28,7 @@ describe('GetProjectUseCase', () => {
   })
 
   it('should throw if project is not found', async () => {
-    await expect(sut.execute({ id: 'invalid_id' })).rejects.toThrow()
+    await expect(sut.execute({ id: 'invalid_id' })).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should be able to return a project', async () => {

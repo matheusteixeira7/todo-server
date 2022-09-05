@@ -30,7 +30,7 @@ describe('DeleteProjectUseCase', () => {
       id: 'invalid_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should delete project', async () => {

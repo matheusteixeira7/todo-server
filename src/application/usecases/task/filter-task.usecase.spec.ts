@@ -39,7 +39,7 @@ describe('FilterTaskUseCase', () => {
       projectId: 'invalid_id'
     }
 
-    await expect(sut.execute(filter)).rejects.toThrowError('Project not found')
+    await expect(sut.execute(filter)).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should NOT be able to filter a task with an invalid status', async () => {
@@ -62,7 +62,7 @@ describe('FilterTaskUseCase', () => {
       projectId: project.id
     }
 
-    await expect(sut.execute(task)).rejects.toThrowError('Invalid status')
+    await expect(sut.execute(task)).rejects.toThrowError('Status inválido')
   })
 
   it('should be able to filter a task', async () => {

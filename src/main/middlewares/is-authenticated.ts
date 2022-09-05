@@ -10,7 +10,7 @@ export const isAuthenticated = async (
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    throw new CustomError(401, 'JWT Token is missing.')
+    throw new CustomError(401, 'Token não informado')
   }
   const [, token] = authHeader.split(' ')
 
@@ -23,6 +23,6 @@ export const isAuthenticated = async (
 
     return next()
   } catch {
-    throw new CustomError(401, 'Invalid JWT Token.')
+    throw new CustomError(401, 'Token inválido')
   }
 }

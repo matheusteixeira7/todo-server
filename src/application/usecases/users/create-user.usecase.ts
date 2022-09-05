@@ -21,7 +21,7 @@ export class CreateUser {
     const user = await this.usersRepository.findByEmail(email)
 
     if (user) {
-      throw new CustomError(400, 'Email already in use')
+      throw new CustomError(400, 'Email já cadastrado')
     }
 
     const hashedPassword = await new HashHandler().generate(password)

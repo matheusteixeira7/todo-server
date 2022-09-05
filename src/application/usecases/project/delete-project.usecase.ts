@@ -17,7 +17,7 @@ export class DeleteProjectUseCase {
     const project = await this.projectRepository.findById(id)
 
     if (!project) {
-      throw new CustomError(404, 'Project not found')
+      throw new CustomError(404, 'Projeto não encontrado')
     }
 
     await this.projectRepository.delete(project.id)

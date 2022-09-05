@@ -21,13 +21,13 @@ export class UpdateProjectUseCase {
     const project = await this.projectRepository.findById(id)
 
     if (!project) {
-      throw new CustomError(404, 'Project not found')
+      throw new CustomError(404, 'Projeto não encontrado')
     }
 
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new CustomError(404, 'User not found')
+      throw new CustomError(404, 'Usuário não encontrado')
     }
 
     Object.assign(project, {

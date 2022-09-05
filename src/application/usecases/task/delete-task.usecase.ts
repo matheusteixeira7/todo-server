@@ -17,7 +17,7 @@ export class DeleteTaskUseCase {
     const task = await this.taskRepository.findById(id)
 
     if (!task) {
-      throw new CustomError(404, 'Task not found')
+      throw new CustomError(404, 'Tarefa não encontrada')
     }
 
     await this.taskRepository.delete(task.id)

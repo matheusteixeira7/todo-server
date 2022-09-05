@@ -13,7 +13,7 @@ describe('Delete user use case', () => {
   it('should throw error if user not found exists', async () => {
     await expect(sut.execute({
       id: '1'
-    })).rejects.toThrowError('User not found.')
+    })).rejects.toThrowError('Usuário não encontrado')
   })
 
   it('should be able to delete a user', async () => {

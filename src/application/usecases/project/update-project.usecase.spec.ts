@@ -34,7 +34,7 @@ describe('DeleteProjectUseCase', () => {
       userId: 'any_user_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should NOT update if user is not found', async () => {
@@ -55,7 +55,7 @@ describe('DeleteProjectUseCase', () => {
       userId: 'invalid_id'
     })
 
-    await expect(promise).rejects.toThrow()
+    await expect(promise).rejects.toThrowError('Usuário não encontrado')
   })
 
   it('should update project', async () => {

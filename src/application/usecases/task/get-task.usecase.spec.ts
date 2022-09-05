@@ -37,7 +37,7 @@ describe('GetTaskUseCase', () => {
   })
 
   it('should throw if task is not found', async () => {
-    await expect(sut.execute({ id: 'invalid_id' })).rejects.toThrow()
+    await expect(sut.execute({ id: 'invalid_id' })).rejects.toThrowError('Tarefa não encontrada')
   })
 
   it('should be able to return a task', async () => {

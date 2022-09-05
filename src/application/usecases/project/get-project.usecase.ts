@@ -17,7 +17,7 @@ export class GetProjectUseCase {
     const projectExists = await this.projectRepository.findById(id)
 
     if (!projectExists) {
-      throw new CustomError(404, 'Project not found')
+      throw new CustomError(404, 'Projeto não encontrado')
     }
 
     return projectExists

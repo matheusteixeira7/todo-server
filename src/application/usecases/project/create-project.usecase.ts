@@ -21,13 +21,13 @@ export class CreateProjectUseCase {
     const projectExists = await this.projectRepository.findByName(name)
 
     if (projectExists) {
-      throw new CustomError(409, 'Project already exists')
+      throw new CustomError(409, 'Projeto já existe')
     }
 
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw new CustomError(404, 'User not found')
+      throw new CustomError(404, 'Usuário não encontrado')
     }
 
     const project = Project.create({ name, userId })

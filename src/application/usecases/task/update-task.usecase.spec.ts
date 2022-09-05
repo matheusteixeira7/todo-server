@@ -46,7 +46,7 @@ describe('UpdateTaskUseCase', () => {
       projectId: 'any_project_id'
     })
 
-    await expect(promise).rejects.toThrowError('Task not found')
+    await expect(promise).rejects.toThrowError('Tarefa não encontrada')
   })
 
   it('should throw if project is not found', async () => {
@@ -78,7 +78,7 @@ describe('UpdateTaskUseCase', () => {
       projectId: 'invalid_id'
     })
 
-    await expect(promise).rejects.toThrowError('Project not found')
+    await expect(promise).rejects.toThrowError('Projeto não encontrado')
   })
 
   it('should throw if status is invalid', async () => {
@@ -110,7 +110,7 @@ describe('UpdateTaskUseCase', () => {
       projectId: project.id
     })
 
-    await expect(promise).rejects.toThrowError('Invalid status')
+    await expect(promise).rejects.toThrowError('Status inválido')
   })
 
   it('should update task', async () => {
