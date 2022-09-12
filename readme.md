@@ -65,7 +65,7 @@ $ gh repo clone matheusteixeira7/todo-server
 $ cd todo-server
 ```
 
-Crie um arquivo .env e cole os dados contigos no arquivo .env.example
+Crie um arquivo .env e cole os dados contidos no arquivo .env.example
 
 **Instalando as dependências**
 
@@ -78,6 +78,20 @@ $ docker compose up -d
 ```
 
 o próprio Docker irá instalar a pasta node_modules para você.
+
+Em seguida, entre no container do APP
+
+```
+$ docker compose exec app bash
+```
+
+Agora rode o comando abaixo para gerar o schema no teu DB
+
+```
+$ npx prisma migrate dev --name init
+```
+
+Agora é só testar a aplicação :)
 
 ## Construído com
 
