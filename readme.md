@@ -104,6 +104,7 @@ Agora é só testar a aplicação :)
 - [Celebrate](https://github.com/arb/celebrate) - Validação de rotas com JOI
 - [Tsyringe](https://github.com/microsoft/tsyringe) - Injeção de dependência
 - [Prisma](https://www.prisma.io/) - ORM
+- [Swagger](https://swagger.io/) - Documentação
 - [ESlint](https://eslint.org/) - Linter
 - [Prettier](https://prettier.io/) - Formatador de código
 
