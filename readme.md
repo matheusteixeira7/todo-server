@@ -91,6 +91,12 @@ Agora rode o comando abaixo para gerar o schema no teu DB
 $ npx prisma migrate dev --name init
 ```
 
+Para ver a documentação da API, acesse:
+
+```
+http://localhost:8000/api-docs/
+```
+
 Agora é só testar a aplicação :)
 
 ## Construído com
