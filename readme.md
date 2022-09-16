@@ -69,7 +69,13 @@ Crie um arquivo .env e cole os dados contidos no arquivo .env.example
 
 **Instalando as dependências**
 
-Não instale as dependências através de npm install ou yarn.
+Primeiramente, dê permissão de execução ao arquivo start.sh. Para isso, execute o comando abaixo:
+
+```
+$ chmod +x start.sh
+```
+
+Depois, não instale as dependências através de npm install ou yarn.
 
 Quando você rodar o comando
 
